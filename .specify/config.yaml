@@ -1,0 +1,36 @@
+# Spec-Kit Plus Configuration
+# Defines project configuration for the full-stack todo application
+
+project:
+  name: "Full-Stack Multi-User Web Todo Application"
+  version: "1.0.0"
+  description: "A full-stack web application for multi-user todo management"
+
+features:
+  current: "002-full-stack-todo-app"
+  directory: "specs/002-full-stack-todo-app"
+
+directories:
+  specs: "specs"
+  contracts: "specs/002-full-stack-todo-app/contracts"
+  architecture: "specs"
+  features: "specs/features"
+  database: "specs/database"
+  api: "specs/api"
+
+files:
+  spec: "specs/002-full-stack-todo-app/spec.md"
+  plan: "specs/002-full-stack-todo-app/plan.md"
+  tasks: "specs/002-full-stack-todo-app/tasks.md"
+  data_model: "specs/002-full-stack-todo-app/data-model.md"
+  research: "specs/002-full-stack-todo-app/research.md"
+  quickstart: "specs/002-full-stack-todo-app/quickstart.md"
+
+tools:
+  linter: "enabled"
+  formatter: "enabled"
+  test_runner: "pytest"
+
+branches:
+  main: "main"
+  feature: "002-full-stack-todo-app"
