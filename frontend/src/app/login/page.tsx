@@ -14,12 +14,9 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   // Redirect if already authenticated
-  if (isAuthenticated()) {
-    // In a real app, you'd use router.push, but for simplicity we'll use window.location
-    if (typeof window !== 'undefined') {
-      window.location.href = '/dashboard';
-    }
-    return <div>Redirecting...</div>;
+  if (typeof window !== 'undefined' && isAuthenticated()) {
+    window.location.href = '/dashboard';
+    return <div className="loading">Redirecting...</div>;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,7 +73,14 @@ export default function LoginPage() {
             />
           </div>
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? (
+              <>
+                <div className="loading-spinner"></div>
+                <span>Logging in...</span>
+              </>
+            ) : (
+              'Login'
+            )}
           </button>
         </form>
         <div className="auth-links">

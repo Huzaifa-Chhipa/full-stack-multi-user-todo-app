@@ -60,12 +60,14 @@ const TaskItem: React.FC<{
             onChange={(e) => setTitle(e.target.value)}
             maxLength={200}
             className="task-title-input"
+            placeholder="Task title..."
           />
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={1000}
             className="task-description-input"
+            placeholder="Task description..."
           />
           <div className="task-actions">
             <button onClick={handleUpdate} className="save-btn">Save</button>
@@ -113,7 +115,7 @@ export default function DashboardPage() {
 
   // Check if user is authenticated
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (typeof window !== 'undefined' && !isAuthenticated()) {
       window.location.href = '/login';
     }
   }, []);
@@ -133,7 +135,7 @@ export default function DashboardPage() {
       }
     };
 
-    if (isAuthenticated()) {
+    if (typeof window !== 'undefined' && isAuthenticated()) {
       fetchTasks();
     }
   }, []);
@@ -187,21 +189,25 @@ export default function DashboardPage() {
     window.location.href = '/login';
   };
 
-  if (!isAuthenticated()) {
-    return <div>Redirecting to login...</div>;
+  if (typeof window !== 'undefined' && !isAuthenticated()) {
+    window.location.href = '/login';
+    return <div className="loading">Redirecting to login...</div>;
   }
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>My Todo List</h1>
+        <h1>My Modern Todo List</h1>
         <button onClick={handleLogout} className="logout-btn">Logout</button>
       </header>
 
       {error && <div className="error">{error}</div>}
 
       {loading ? (
-        <div className="loading">Loading tasks...</div>
+        <div className="loading">
+          <div className="loading-spinner"></div>
+          <p>Loading tasks...</p>
+        </div>
       ) : (
         <>
           <div className="create-task-section">
@@ -238,21 +244,31 @@ export default function DashboardPage() {
 
           <div className="tasks-list">
             {tasks.length === 0 ? (
-              <div className="no-tasks">No tasks yet. Add a new task to get started!</div>
+              <div className="no-tasks">
+                <div className="no-tasks-content">
+                  <h3>No tasks yet</h3>
+                  <p>Add a new task to get started!</p>
+                </div>
+              </div>
             ) : (
-              tasks.map(task => (
-                <TaskItem
+              tasks.map((task, index) => (
+                <div
                   key={task.id}
-                  task={task}
-                  onUpdate={handleUpdateTask}
-                  onDelete={handleDeleteTask}
-                  onToggle={async (id: number) => {
-                    await handleToggleTask(id);
-                    // Refresh the task list to reflect the toggle
-                    const updatedTasks = await taskApi.getTasks();
-                    setTasks(updatedTasks);
-                  }}
-                />
+                  className="task-item-wrapper"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <TaskItem
+                    task={task}
+                    onUpdate={handleUpdateTask}
+                    onDelete={handleDeleteTask}
+                    onToggle={async (id: number) => {
+                      await handleToggleTask(id);
+                      // Refresh the task list to reflect the toggle
+                      const updatedTasks = await taskApi.getTasks();
+                      setTasks(updatedTasks);
+                    }}
+                  />
+                </div>
               ))
             )}
           </div>

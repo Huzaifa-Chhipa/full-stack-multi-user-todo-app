@@ -64,7 +64,17 @@
       "Bash(npx next start)",
       "Bash(npx serve -l 3001 frontend/out)",
       "Bash(dir frontend)",
-      "Bash(git init)"
+      "Bash(git init)",
+      "Bash(git config --global user.name \"Huzaifa-Chhipa\")",
+      "Bash(gh repo create full-stack-multi-user-todo-app --public --push)",
+      "Bash(gh repo create full-stack-multi-user-todo-app --public --source . --push)",
+      "Bash(git commit -m \"Initial commit: Full-Stack Multi-User Web Todo Application\")",
+      "Bash(dir frontendsrc)",
+      "Bash(dir \"frontend\\\\src\")",
+      "Bash(dir \"frontend\\\\src\\\\app\")",
+      "Bash(dir \"frontend\\\\src\\\\app\\\\dashboard\")",
+      "Bash(dir \"frontend\\\\src\\\\app\\\\login\")",
+      "Bash(dir \"frontend\\\\src\\\\components\")"
     ]
   }
 }

@@ -15,11 +15,9 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
 
   // Redirect if already authenticated
-  if (isAuthenticated()) {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/dashboard';
-    }
-    return <div>Redirecting...</div>;
+  if (typeof window !== 'undefined' && isAuthenticated()) {
+    window.location.href = '/dashboard';
+    return <div className="loading">Redirecting...</div>;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,7 +100,14 @@ export default function SignupPage() {
             />
           </div>
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? (
+              <>
+                <div className="loading-spinner"></div>
+                <span>Creating account...</span>
+              </>
+            ) : (
+              'Sign Up'
+            )}
           </button>
         </form>
         <div className="auth-links">
