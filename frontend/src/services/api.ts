@@ -5,8 +5,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getToken, getUserIdFromToken } from '../lib/auth';
 
-// API base URL
-const API_BASE_URL = "https://huzaifachhipa-todo-backend.hf.space";
+// API base URL - using environment variable for consistency
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
