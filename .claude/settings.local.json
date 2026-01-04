@@ -74,7 +74,22 @@
       "Bash(dir \"frontend\\\\src\\\\app\")",
       "Bash(dir \"frontend\\\\src\\\\app\\\\dashboard\")",
       "Bash(dir \"frontend\\\\src\\\\app\\\\login\")",
-      "Bash(dir \"frontend\\\\src\\\\components\")"
+      "Bash(dir \"frontend\\\\src\\\\components\")",
+      "Bash(git commit -m \"feat: upgrade frontend UI with modern 3D animations and gradient effects\n\n- Implemented animated gradient backgrounds with dynamic color shifts\n- Added 3D card effects with hover animations and depth\n- Enhanced buttons with gradient backgrounds and improved visibility\n- Added floating particle animations for visual enhancement\n- Improved loading states with animated spinners\n- Fixed hydration errors in dashboard authentication\n- Enhanced text visibility on all buttons with proper contrast\n- Added staggered animations for task items\n- Improved responsive design for all screen sizes\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")",
+      "Bash(git push origin master)",
+      "Bash(dir backend)",
+      "Bash(dir \"backend\\\\src\")",
+      "Bash(dir \"frontend/src\")",
+      "Bash(dir \"frontend/src/app\")",
+      "Bash(dir frontend.env*)",
+      "Bash(dir \"frontend/.env*\")",
+      "Bash(git check-ignore frontend/.env.local)",
+      "Bash(cat .gitignore)",
+      "Bash(git add CONFIGURATION.md)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: add configuration documentation for Hugging Face Space integration\n\n- Created CONFIGURATION.md with instructions for connecting frontend to Hugging Face Space backend\n- Updated CORS settings in backend to allow all origins for cross-domain requests\n- Documented the required environment variable configuration\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git add backend/src/main.py)",
+      "Bash(git commit -m \"chore: update CORS settings to allow all origins for Hugging Face Space integration\")",
+      "Bash(python -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8000)"
     ]
   }
 }
