@@ -23,7 +23,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, configure this properly
+    allow_origins=["*","https://full-stack-multi-user-todo-app.vercel.app"],  # In production, configure this properly
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
