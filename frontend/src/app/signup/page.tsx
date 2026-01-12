@@ -47,11 +47,18 @@ export default function SignupPage() {
       // Get the API base URL
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-      // Call the register endpoint
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
-        username,
-        password
-      });
+      // Call the register endpoint with URL-encoded form data
+      const response = await axios.post(`${API_BASE_URL}/auth/register`,
+        new URLSearchParams({
+          'username': username,
+          'password': password
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
 
       // If registration is successful, log in the user
       const loginResponse = await axios.post(`${API_BASE_URL}/auth/token`,
