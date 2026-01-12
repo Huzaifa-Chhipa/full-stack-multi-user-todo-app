@@ -49,10 +49,8 @@ export const getUserIdFromToken = (): string | null => {
 };
 
 // Login function
-export const login = async (username: string, password: string): Promise<{ access_token: string; token_type: string } | null> => {
+export const login = async (username: string, password: string): Promise<boolean> => {
   try {
-    // In a real application, this would be a separate signup endpoint
-    // For this demo, we'll use the same endpoint for both login and signup
     // FastAPI expects form data by default for login endpoints
     const params = new URLSearchParams();
     params.append('username', username);
@@ -65,9 +63,9 @@ export const login = async (username: string, password: string): Promise<{ acces
     });
     const { access_token } = response.data;
     setToken(access_token);
-    return response.data;
+    return true;
   } catch (error: any) {
-    console.error('Login/Signup error:', error);
+    console.error('Login error:', error);
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
@@ -81,7 +79,7 @@ export const login = async (username: string, password: string): Promise<{ acces
       // Something happened in setting up the request that triggered an Error
       console.error('Error message:', error.message);
     }
-    return null;
+    return false;
   }
 };
 

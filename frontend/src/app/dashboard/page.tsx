@@ -14,7 +14,8 @@ const TaskItem: React.FC<{
   onUpdate: (task: Task) => void;
   onDelete: (id: number) => void;
   onToggle: (id: number) => void;
-}> = ({ task, onUpdate, onDelete, onToggle }) => {
+  index?: number;
+}> = ({ task, onUpdate, onDelete, onToggle, index = 0 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description || '');
@@ -51,7 +52,7 @@ const TaskItem: React.FC<{
   };
 
   return (
-    <div className="task-item">
+    <div className="task-item" style={{ '--index': index } as React.CSSProperties}>
       {isEditing ? (
         <div className="task-edit-form">
           <input
@@ -267,6 +268,7 @@ export default function DashboardPage() {
                       const updatedTasks = await taskApi.getTasks();
                       setTasks(updatedTasks);
                     }}
+                    index={index}
                   />
                 </div>
               ))

@@ -3,6 +3,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.pool import NullPool
 import os
 from dotenv import load_dotenv
+from .models.user import User  # Import User model to include in metadata
+from .models.task import Task  # Import Task model to include in metadata
 
 # Load environment variables from .env file
 load_dotenv()

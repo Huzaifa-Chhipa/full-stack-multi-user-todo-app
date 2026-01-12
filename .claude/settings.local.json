@@ -92,7 +92,9 @@
       "Bash(python -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8000)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nchore: update main.py CORS configuration and API URL\n\n- Fixed Vercel app URL in CORS middleware by adding trailing slash\n- Updated frontend API URL to point to Hugging Face Space backend\n- Updated Claude Code settings with new workflow commands\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git pull origin master)",
-      "Bash(git add frontend/.env.local)"
+      "Bash(git add frontend/.env.local)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: correct backend URL and use environment variable\n\n- Fixed backend URL from huzaifachhipa-todo_backend.hf.space to huzaifachhipa-todo-backend.hf.space \\(correct domain name\\)\n- Removed /docs suffix which was incorrect for API endpoints\n- Updated API service to use environment variable for consistency with auth service\n- This should resolve the communication issue between Vercel frontend and Hugging Face backend\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(find . -name \"*.py\" -exec grep -l \"create_access_token\" {} ;)"
     ]
   }
 }

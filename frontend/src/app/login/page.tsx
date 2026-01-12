@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { login, isAuthenticated } from '../../lib/auth';
 import Link from 'next/link';
+import axios from 'axios';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -25,17 +26,37 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await login(username, password);
-      if (result) {
-        // Redirect to dashboard on successful login
-        if (typeof window !== 'undefined') {
-          window.location.href = '/dashboard';
+      // Get the API base URL
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
+      // Direct API call to login endpoint
+      const response = await axios.post(`${API_BASE_URL}/auth/token`,
+        new URLSearchParams({
+          'username': username,
+          'password': password
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }
         }
+      );
+
+      // Store the token
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('todo_app_token', response.data.access_token);
+      }
+
+      // Redirect to dashboard on successful login
+      if (typeof window !== 'undefined') {
+        window.location.href = '/dashboard';
+      }
+    } catch (err: any) {
+      if (err.response?.data?.detail) {
+        setError(err.response.data.detail);
       } else {
         setError('Invalid username or password');
       }
-    } catch (err) {
-      setError('An error occurred during login');
       console.error('Login error:', err);
     } finally {
       setLoading(false);
@@ -48,7 +69,7 @@ export default function LoginPage() {
         <h2>Login</h2>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="form-group" data-label="USERNAME">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -57,10 +78,10 @@ export default function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your username"
+              placeholder=" "
             />
           </div>
-          <div className="form-group">
+          <div className="form-group" data-label="PASSWORD">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -69,7 +90,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your password"
+              placeholder=" "
             />
           </div>
           <button type="submit" disabled={loading} className="submit-btn">
