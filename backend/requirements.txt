@@ -5,6 +5,11 @@ python-jose==3.5.0
 passlib==1.7.4
 python-multipart==0.0.21
 asyncpg==0.31.0
+psycopg2-binary==2.9.9
 sqlalchemy==2.0.45
 pydantic==2.12.5
 typing-extensions==4.15.0
+openai>=2.9.0
+python-dotenv==1.0.1
+alembic==1.14.0
+openai-agents

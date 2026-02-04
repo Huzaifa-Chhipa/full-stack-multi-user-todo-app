@@ -1,0 +1,27 @@
+version: 0.0
+runtime:
+  huggingface: 1.0
+type: docker
+gpu: false
+hardware:
+  cpu: 1x
+  memory: 8GiB
+secrets:
+  - key: DATABASE_URL
+    name: DATABASE_URL
+    value: "postgresql+asyncpg://username:password@localhost:5432/todo_app"
+  - key: GEMINI_API_KEY
+    name: GEMINI_API_KEY
+    value: "your-gemini-api-key-here"
+  - key: SECRET_KEY
+    name: SECRET_KEY
+    value: "your-secret-key-here"
+env:
+  - key: PORT
+    value: "7860"
+  - key: DATABASE_URL
+    value: $DATABASE_URL
+  - key: GEMINI_API_KEY
+    value: $GEMINI_API_KEY
+  - key: SECRET_KEY
+    value: $SECRET_KEY

@@ -11,6 +11,7 @@ class UserBase(SQLModel):
 
 class User(UserBase, table=True):
     id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
+    username: str = Field(unique=True, min_length=3, max_length=50, regex=r'^[a-zA-Z0-9_-]+$')
     hashed_password: str
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -21,18 +22,11 @@ class UserRead(UserBase):
     updated_at: datetime
 
 class UserCreate(UserBase):
-    password: str = Field(min_length=6, max_length=72)  # Limit to 72 chars for bcrypt
+    password: str = Field(min_length=6, max_length=100)
 
     @property
     def hashed_password(self):
-        # Truncate password to 72 bytes if needed to comply with bcrypt limitations
-        password_bytes = self.password.encode('utf-8')
-        if len(password_bytes) > 72:
-            # Truncate to 72 bytes and decode back to string
-            password_str = password_bytes[:72].decode('utf-8', errors='ignore')
-        else:
-            password_str = self.password
-        return pwd_context.hash(password_str)
+        return pwd_context.hash(self.password)
 
 class UserLogin(SQLModel):
     username: str

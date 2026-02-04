@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from .db import create_db_and_tables
 from .api.tasks import router as tasks_router
 from .api.auth import router as auth_router
+from .api.chat import router as chat_router
 
 # Add CORS middleware to allow requests from frontend
 
@@ -32,6 +33,7 @@ app.add_middleware(
 # Include routers
 app.include_router(tasks_router, prefix="/api/{user_id}", tags=["tasks"])
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
+app.include_router(chat_router, tags=["chat"])
 
 @app.get("/")
 def read_root():
@@ -39,4 +41,4 @@ def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -149,6 +149,25 @@ export const taskApi = {
     });
     return response.data;
   },
+
+  // Chat with AI assistant
+  chatWithAssistant: async (userId: string, messages: Array<{role: string, content: string}>, conversationId?: number) => {
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
+
+    const token = getToken();
+    const response = await apiClient.post(`/api/${userId}/chat`, {
+      messages,
+      conversation_id: conversationId
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  },
 };
 
 export default apiClient;

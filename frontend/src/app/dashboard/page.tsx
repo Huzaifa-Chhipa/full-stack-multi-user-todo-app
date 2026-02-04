@@ -6,7 +6,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { taskApi, Task } from '../../services/api';
-import { isAuthenticated, logout } from '../../lib/auth';
+import { isAuthenticated, logout, getUserIdFromToken } from '../../lib/auth';
+import ChatbotWidget from '../../components/ChatbotWidget';
 
 // TaskItem component for displaying individual tasks
 const TaskItem: React.FC<{
@@ -113,31 +114,37 @@ export default function DashboardPage() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Function to refresh tasks
+  const refreshTasks = async () => {
+    try {
+      setLoading(true);
+      const tasksData = await taskApi.getTasks();
+      setTasks(tasksData);
+    } catch (err) {
+      setError('Failed to load tasks');
+      console.error('Error loading tasks:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Check if user is authenticated
   useEffect(() => {
     if (typeof window !== 'undefined' && !isAuthenticated()) {
       window.location.href = '/login';
+    } else {
+      // Get the current user ID
+      const id = getUserIdFromToken();
+      setUserId(id);
     }
   }, []);
 
   // Load tasks when component mounts
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        setLoading(true);
-        const tasksData = await taskApi.getTasks();
-        setTasks(tasksData);
-      } catch (err) {
-        setError('Failed to load tasks');
-        console.error('Error loading tasks:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (typeof window !== 'undefined' && isAuthenticated()) {
-      fetchTasks();
+      refreshTasks();
     }
   }, []);
 
@@ -212,12 +219,17 @@ export default function DashboardPage() {
       ) : (
         <>
           <div className="create-task-section">
-            <button
-              onClick={() => setShowCreateForm(!showCreateForm)}
-              className="create-task-btn"
-            >
-              {showCreateForm ? 'Cancel' : 'Add New Task'}
-            </button>
+            <div className="create-task-controls">
+              <button
+                onClick={() => setShowCreateForm(!showCreateForm)}
+                className="create-task-btn"
+              >
+                {showCreateForm ? 'Cancel' : 'Add New Task'}
+              </button>
+
+              {/* Chatbot Widget - appears as a button alongside the Add Task button */}
+              {userId && <ChatbotWidget userId={userId} onTaskUpdate={refreshTasks} />}
+            </div>
 
             {showCreateForm && (
               <div className="create-task-form">
@@ -276,6 +288,7 @@ export default function DashboardPage() {
           </div>
         </>
       )}
+
     </div>
   );
 }

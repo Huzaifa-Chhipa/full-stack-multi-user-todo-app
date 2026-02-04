@@ -1,12 +1,14 @@
-# Full-Stack Multi-User Web Todo Application
+# Full-Stack Multi-User Web Todo Application with AI Chatbot
 
-A complete full-stack web application for managing todo tasks with multi-user support, authentication, and secure data isolation.
+A complete full-stack web application for managing todo tasks with multi-user support, authentication, and secure data isolation. Enhanced with an AI-powered chatbot for natural language task management.
 
 ## Features
 
 - **Multi-user support**: Each user has their own isolated set of tasks
 - **Authentication**: Secure login and signup with JWT-based authentication
 - **Task Management**: Create, read, update, delete, and toggle completion status of tasks
+- **AI Chatbot**: Natural language interface for managing tasks using Google Gemini
+- **Conversation Context**: Maintains context between messages for intelligent responses
 - **Responsive UI**: Clean, user-friendly interface built with Next.js
 - **Secure API**: FastAPI backend with proper authorization and validation
 
@@ -15,6 +17,8 @@ A complete full-stack web application for managing todo tasks with multi-user su
 - **Frontend**: Next.js 16+ with App Router
 - **Backend**: FastAPI with async support
 - **Database**: PostgreSQL via SQLModel ORM
+- **AI Service**: Google Gemini with openai-agents library
+- **MCP Tools**: Model Context Protocol tools for task operations
 - **Authentication**: JWT-based with custom auth system
 - **Frontend Libraries**: React, Axios
 
@@ -24,6 +28,8 @@ The application follows a client-server architecture with:
 - Frontend Next.js application handling UI and user interactions
 - FastAPI backend providing REST API endpoints
 - PostgreSQL database for persistent storage
+- Google Gemini AI with openai-agents library for natural language processing
+- MCP (Model Context Protocol) tools for secure task operations
 - JWT tokens for authentication and user isolation
 
 ## Setup Instructions
@@ -118,6 +124,10 @@ All task endpoints require a valid JWT token in the Authorization header.
 - `PUT /api/{user_id}/tasks/{id}` - Update a task
 - `DELETE /api/{user_id}/tasks/{id}` - Delete a task
 - `PATCH /api/{user_id}/tasks/{id}/complete` - Toggle task completion status
+
+### AI Chatbot
+
+- `POST /api/{user_id}/chat` - Chat with the AI assistant for natural language task management
 
 ## Development
 

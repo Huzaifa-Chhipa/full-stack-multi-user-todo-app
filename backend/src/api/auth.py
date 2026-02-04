@@ -20,36 +20,13 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify plain password against hashed password"""
-    try:
-        # Check if this is a bcrypt hash (doesn't contain ':')
-        if ':' not in hashed_password:
-            return pwd_context.verify(plain_password, hashed_password)
-        else:
-            # This is a fallback hash in format: hash:salt
-            stored_hash, salt = hashed_password.split(':', 1)
-            import hashlib
-            computed_hash = hashlib.sha256((plain_password + salt).encode()).hexdigest()
-            return computed_hash == stored_hash
-    except Exception:
-        # Fallback in case of bcrypt backend issues
-        return False
+    return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
-    """Hash a password"""
-    try:
-        # Ensure password is not longer than 72 bytes for bcrypt
-        password_bytes = password.encode('utf-8')
-        if len(password_bytes) > 72:
-            # Truncate to 72 bytes and decode back to string
-            password = password_bytes[:72].decode('utf-8', errors='ignore')
-        return pwd_context.hash(password)
-    except Exception as e:
-        # Handle bcrypt backend issues
-        import hashlib
-        # Fallback to SHA-256 with salt (not recommended for production)
-        import secrets
-        salt = secrets.token_hex(16)
-        return hashlib.sha256((password + salt).encode()).hexdigest() + ":" + salt
+    """Hash a password, truncating if needed for bcrypt compatibility"""
+    # Truncate password to 72 bytes for bcrypt compatibility
+    truncated_password = password[:72] if len(password.encode('utf-8')) > 72 else password
+    return pwd_context.hash(truncated_password)
 
 @router.post("/token")
 async def login_for_access_token(
@@ -63,7 +40,7 @@ async def login_for_access_token(
     # Query for user by username
     statement = select(User).where(User.username == username)
     result = await session.execute(statement)
-    user = result.scalars().first()
+    user = result.scalar_one_or_none()
 
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
@@ -82,17 +59,16 @@ async def login_for_access_token(
 
 @router.post("/register")
 async def register_user(
-    username: str = Form(..., min_length=3, max_length=50),
-    password: str = Form(..., min_length=6, max_length=72),
+    user_data: UserCreate,
     session: AsyncSession = Depends(get_session)
 ):
     """
     Register a new user
     """
     # Check if user already exists
-    statement = select(User).where(User.username == username)
+    statement = select(User).where(User.username == user_data.username)
     result = await session.execute(statement)
-    existing_user = result.scalars().first()
+    existing_user = result.scalar_one_or_none()
 
     if existing_user:
         raise HTTPException(
@@ -101,9 +77,9 @@ async def register_user(
         )
 
     # Create new user
-    hashed_password = get_password_hash(password)
+    hashed_password = get_password_hash(user_data.password)
     db_user = User(
-        username=username,
+        username=user_data.username,
         hashed_password=hashed_password
     )
 
