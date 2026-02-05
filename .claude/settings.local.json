@@ -142,7 +142,9 @@
       "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"show me my tasks\"\"}],\"\"conversation_id\"\":null}\")",
       "Bash(curl -X POST \"http://localhost:8000/auth/token\" -H \"Content-Type: application/x-www-form-urlencoded\" -d \"username=chat_test_user&password=test_password\")",
       "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"delete the banana task\"\"}],\"\"conversation_id\"\":null}\")",
-      "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"banana ke naam se jo task he usko delete kro\"\"}],\"\"conversation_id\"\":null}\")"
+      "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"banana ke naam se jo task he usko delete kro\"\"}],\"\"conversation_id\"\":null}\")",
+      "Bash(helm lint:*)",
+      "Bash(minikube status:*)"
     ]
   }
 }
