@@ -59,14 +59,15 @@ async def login_for_access_token(
 
 @router.post("/register")
 async def register_user(
-    user_data: UserCreate,
+    username: str = Form(..., min_length=3, max_length=50),
+    password: str = Form(..., min_length=6, max_length=100),
     session: AsyncSession = Depends(get_session)
 ):
     """
     Register a new user
     """
     # Check if user already exists
-    statement = select(User).where(User.username == user_data.username)
+    statement = select(User).where(User.username == username)
     result = await session.execute(statement)
     existing_user = result.scalar_one_or_none()
 
@@ -76,10 +77,18 @@ async def register_user(
             detail="Username already registered"
         )
 
+    # Validate username format
+    import re
+    if not re.match(r'^[a-zA-Z0-9_-]+$', username):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username can only contain letters, numbers, underscores, and hyphens"
+        )
+
     # Create new user
-    hashed_password = get_password_hash(user_data.password)
+    hashed_password = get_password_hash(password)
     db_user = User(
-        username=user_data.username,
+        username=username,
         hashed_password=hashed_password
     )
 

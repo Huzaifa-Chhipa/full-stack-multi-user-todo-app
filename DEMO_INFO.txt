@@ -1,0 +1,32 @@
+NATURAL LANGUAGE COMMANDS DEMO
+================================
+
+Your todo application already supports all the commands you specified:
+
+1. 'Add a task to buy groceries' -> Adds task 'buy groceries'
+2. 'Show me all my tasks' -> Lists all tasks
+3. 'What's pending?' -> Lists pending tasks
+4. 'Mark task 3 as complete' -> Marks task 3 as complete
+5. 'Delete the meeting task' -> Deletes meeting task by name
+6. 'Change task 1 to Call mom tonight' -> Updates task 1 title
+7. 'I need to remember to pay bills' -> Adds task 'pay bills'
+8. 'What have I completed?' -> Lists completed tasks
+
+Plus multilingual support:
+• 'task add kro name groceries' -> Adds task 'groceries'
+• 'mere sab tasks dikhao' -> Shows all tasks
+• 'task delete kro groceries wlaa' -> Deletes groceries task
+
+The system uses:
+- Primary: Google Gemini API for advanced NLP (set GEMINI_API_KEY)
+- Fallback: Local processing for reliability
+- Smart matching for task identification
+
+To use the system:
+1. Start your backend server
+2. Access the chatbot in your UI
+3. Type any of the commands above
+4. Watch the AI assistant handle your request!
+
+Configuration file created: NATURAL_LANGUAGE_CONFIG.md
+Documentation file created: NATURAL_LANGUAGE_COMMANDS.md

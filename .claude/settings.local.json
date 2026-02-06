@@ -144,7 +144,10 @@
       "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"delete the banana task\"\"}],\"\"conversation_id\"\":null}\")",
       "Bash(curl -X POST \"http://localhost:8000/api/25b7e380-2800-41c8-964d-c8cfe38b391d/chat\" -H \"Content-Type: application/json\" -d \"{\"\"messages\"\":[{\"\"role\"\":\"\"user\"\",\"\"content\"\":\"\"banana ke naam se jo task he usko delete kro\"\"}],\"\"conversation_id\"\":null}\")",
       "Bash(helm lint:*)",
-      "Bash(minikube status:*)"
+      "Bash(minikube status:*)",
+      "Bash(dir:*)",
+      "Bash(RUN_DEMO.bat)",
+      "Bash(findstr:*)"
     ]
   }
 }
